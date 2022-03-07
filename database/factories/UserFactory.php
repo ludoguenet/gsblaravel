@@ -20,7 +20,7 @@ class UserFactory extends Factory
         return [
             'last_name' => $this->faker->lastName(),
             'first_name' => $this->faker->firstName(),
-            'login' => uniqid(),
+            'login' => uniqid() + uniqid(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'address' => $this->faker->words(10, true),
             'zip_code' => $this->faker->postcode(),
