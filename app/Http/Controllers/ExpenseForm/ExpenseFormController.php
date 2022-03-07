@@ -29,6 +29,7 @@ class ExpenseFormController extends Controller
     {
         $expenseForm = ExpenseForm::whereBelongsTo(auth()->user())
             ->whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
             ->get();
         
         dd($expenseForm);
