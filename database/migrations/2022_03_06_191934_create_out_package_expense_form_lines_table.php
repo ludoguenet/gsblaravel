@@ -20,7 +20,9 @@ return new class extends Migration
 
             // Foreign Expense Form Key
             $table->unsignedBigInteger('expense_form_id');
-            $table->foreign('expense_form_id')->references('id')->on('expense_forms');
+            $table->foreign('expense_form_id')->references('id')
+                ->on('expense_forms')
+                ->onDelete('cascade');
         });
     }
 

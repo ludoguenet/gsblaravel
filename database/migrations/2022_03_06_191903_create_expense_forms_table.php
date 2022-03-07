@@ -18,11 +18,15 @@ return new class extends Migration
 
             // Foreign User Key
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             // Foreign Expense Form State Key
             $table->unsignedBigInteger('expense_form_state_id');
-            $table->foreign('expense_form_state_id')->references('id')->on('expense_form_states');
+            $table->foreign('expense_form_state_id')->references('id')
+                ->on('expense_form_states')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

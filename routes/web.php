@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExpenseForm\ExpenseFormController;
+use App\Http\Controllers\OutPackageExpenseFormLine\OutPackageExpenseFormLineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('expenseForm', ExpenseFormController::class);
+
+// Ligne de frais
+Route::post('outpackage', [OutPackageExpenseFormLineController::class, 'store'])
+    ->name('outpackage.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
