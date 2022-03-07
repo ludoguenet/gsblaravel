@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'login' => $this->faker->word(rand(4, 9), true),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'address' => $this->faker->words(10, true),
-            'zip_code' => rand(5, 5),
+            'zip_code' => $this->faker->postcode(),
             'city' => $this->faker->city(),
             'hired_at' => $this->faker->dateTimeBetween(now()->subYear(10), now()->subDay(1)),
         ];
