@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('out_package_expense_form_lines', function (Blueprint $table) {
+        Schema::create('extra_fees', function (Blueprint $table) {
             $table->id();
             $table->string('label');
             $table->integer('amount');
 
-            // Foreign Expense Form Key
-            $table->unsignedBigInteger('expense_form_id');
-            $table->foreign('expense_form_id')->references('id')
-                ->on('expense_forms')
+            // Foreign Expense Report Key
+            $table->unsignedBigInteger('expense_report_id');
+            $table->foreign('expense_report_id')->references('id')
+                ->on('expense_reports')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('out_package_expense_form_lines');
+        Schema::dropIfExists('extra_fees');
     }
 };

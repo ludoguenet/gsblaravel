@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\ExpenseForm;
+namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\ExpenseForm;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Builder;
 
-class ExpenseFormController extends Controller
+class ExpenseReportExtraFeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,14 +23,7 @@ class ExpenseFormController extends Controller
      */
     public function create()
     {
-        $expenseForm = ExpenseForm::whereBelongsTo(auth()->user())
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->get();
-        
-        dd($expenseForm);
-
-        return view('expense_forms.create');
+        //
     }
 
     /**

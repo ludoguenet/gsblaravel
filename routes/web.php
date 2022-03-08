@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ExpenseForm\ExpenseFormController;
-use App\Http\Controllers\OutPackageExpenseFormLine\OutPackageExpenseFormLineController;
+use App\Http\Controllers\ExpenseReportController;
+use App\Http\Controllers\ExpenseReportExtraFeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('expenseForm', ExpenseFormController::class);
+Route::resource('report', ExpenseReportController::class);
 
-// Ligne de frais
-Route::post('outpackage', [OutPackageExpenseFormLineController::class, 'store'])
-    ->name('outpackage.store');
+// Nested Controllers
+Route::resource('expenseReports.extraFees', ExpenseReportExtraFeeController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\OutPackageExpenseFormLine;
+namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\ExpenseForm;
 use Illuminate\Http\Request;
-use App\Models\ExpenseFormLine;
 use App\Http\Controllers\Controller;
+use App\Models\ExpenseReport;
+use Illuminate\Database\Eloquent\Builder;
 
-class OutPackageExpenseFormLineController extends Controller
+class ExpenseReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +28,14 @@ class OutPackageExpenseFormLineController extends Controller
      */
     public function create()
     {
-        //
+        $expenseForm = ExpenseReport::whereBelongsTo(auth()->user())
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->get();
+        
+        dd($expenseForm);
+
+        return view('expense_reports.create');
     }
 
     /**
@@ -34,9 +44,9 @@ class OutPackageExpenseFormLineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ExpenseFormLine $expenseFormLine)
+    public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**

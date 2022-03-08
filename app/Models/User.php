@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\ExpenseForm;
+use App\Models\ExpenseReport;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,8 +17,8 @@ class User extends Authenticatable
     public $timestamps = false;
     protected $guarded = [];
 
-    public function expenseForms(): HasMany
+    public function expenseReports(): HasMany
     {
-        return $this->hasMany(ExpenseForm::class);
+        return $this->hasMany(ExpenseReport::class);
     }
 }

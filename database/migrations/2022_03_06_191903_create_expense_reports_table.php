@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('expense_forms', function (Blueprint $table) {
+        Schema::create('expense_reports', function (Blueprint $table) {
             $table->id();
 
             // Foreign User Key
@@ -22,10 +22,10 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
-            // Foreign Expense Form State Key
-            $table->unsignedBigInteger('expense_form_state_id');
-            $table->foreign('expense_form_state_id')->references('id')
-                ->on('expense_form_states')
+            // Foreign State Key
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')
+                ->on('states')
                 ->onDelete('cascade');
 
             $table->timestamps();
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expense_forms');
+        Schema::dropIfExists('expense_reports');
     }
 };

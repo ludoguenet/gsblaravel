@@ -13,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('expense_form_lines', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
 
-            // Foreign Expense Form Key
-            $table->unsignedBigInteger('expense_form_id');
-            $table->foreign('expense_form_id')->references('id')
-                ->on('expense_forms')
+            // Foreign Expense Report Key
+            $table->unsignedBigInteger('expense_report_id');
+            $table->foreign('expense_report_id')->references('id')
+                ->on('expense_reports')
                 ->onDelete('cascade');
 
-            // Foreign Expense Fee Type Key
-            $table->unsignedBigInteger('expense_fee_type_id');
-            $table->foreign('expense_fee_type_id')->references('id')
-                ->on('expense_fee_types')
+            // Foreign Type Key
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')
+                ->on('types')
                 ->onDelete('cascade');
         });
     }
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expense_form_lines');
+        Schema::dropIfExists('fees');
     }
 };

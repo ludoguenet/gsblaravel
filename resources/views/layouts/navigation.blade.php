@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('expenseForm.create')" :active="request()->routeIs('expenseForm.create')">
+                    <x-nav-link :href="route('report.create')" :active="request()->routeIs('report.create')">
                         {{ __('Ajouter une fiche de frais') }}
                     </x-nav-link>
                 </div>
