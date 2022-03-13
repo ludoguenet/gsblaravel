@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpenseReport;
+use App\Models\ExtraFee;
 use Illuminate\Http\Request;
 
 class ExpenseReportExtraFeeController extends Controller
@@ -11,7 +13,7 @@ class ExpenseReportExtraFeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ExpenseReport $expenseReport)
     {
         //
     }
@@ -21,7 +23,7 @@ class ExpenseReportExtraFeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ExpenseReport $expenseReport)
     {
         //
     }
@@ -32,9 +34,11 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, ExpenseReport $expenseReport)
     {
-        //
+        $expenseReport->extraFees()->create($request->except('_token'));
+
+        return to_route('report.create')->with('success', 'Frais hors-forfait saisis avec succès.');
     }
 
     /**
@@ -43,7 +47,7 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ExpenseReport $expenseReport, ExtraFee $extraFee)
     {
         //
     }
@@ -54,7 +58,7 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ExpenseReport $expenseReport, ExtraFee $extraFee)
     {
         //
     }
@@ -66,7 +70,7 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ExpenseReport $expenseReport, ExtraFee $extraFee)
     {
         //
     }
@@ -77,7 +81,7 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ExpenseReport $expenseReport, ExtraFee $extraFee)
     {
         //
     }

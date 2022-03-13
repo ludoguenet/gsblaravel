@@ -7,6 +7,7 @@ use App\Models\ExpenseForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ExpenseReport;
+use App\Services\ExpenseReportService;
 use Illuminate\Database\Eloquent\Builder;
 
 class ExpenseReportController extends Controller
@@ -16,9 +17,22 @@ class ExpenseReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ExpenseReportService $service)
     {
-        //
+        $expenseReport = request()->whenHas('expenseReportMonth', function ($expenseReportDate) use ($service) {
+            $expenseReport = $service->getFromMonth(
+                auth()->user(),
+                Carbon::parse($expenseReportDate)
+            );
+
+            return $expenseReport;
+        }, function () {
+            return $expenseReport = null;
+        });
+
+        $expenseReportMonths = ExpenseReport::all()->pluck('created_at');
+
+        return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport'));
     }
 
     /**
@@ -26,16 +40,11 @@ class ExpenseReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ExpenseReportService $service)
     {
-        $expenseForm = ExpenseReport::whereBelongsTo(auth()->user())
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->get();
-        
-        dd($expenseForm);
+        $expenseReport = $service->getOrCreate(auth()->user());
 
-        return view('expense_reports.create');
+        return view('expense_reports.create', compact('expenseReport'));
     }
 
     /**
@@ -78,9 +87,11 @@ class ExpenseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ExpenseReport $report)
     {
-        //
+        $report->fees->map(fn ($fee) => $fee->update(['amount' => $request->fees[$fee->type->id]]));
+
+        return to_route('report.create')->with('success', 'Frais forfaitisés mis à jour avec succès.');
     }
 
     /**

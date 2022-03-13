@@ -19,13 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('report', ExpenseReportController::class);
+Route::middleware('auth')->group(function () {
+    // Report
+    Route::resource('report', ExpenseReportController::class);
 
-// Nested Controllers
-Route::resource('expenseReports.extraFees', ExpenseReportExtraFeeController::class);
+    // Nested Controllers
+    Route::resource('expenseReports.extraFees', ExpenseReportExtraFeeController::class);
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
