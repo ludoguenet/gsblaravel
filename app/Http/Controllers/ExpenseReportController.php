@@ -19,18 +19,10 @@ class ExpenseReportController extends Controller
      */
     public function index(ExpenseReportService $service)
     {
-        $expenseReport = request()->whenHas('expenseReportMonth', function ($expenseReportDate) use ($service) {
-            $expenseReport = $service->getFromMonth(
-                auth()->user(),
-                Carbon::parse($expenseReportDate)
-            );
+        $expenseReport = $this->getFilteredExpenseReport($service);
 
-            return $expenseReport;
-        }, function () {
-            return $expenseReport = null;
-        });
-
-        $expenseReportMonths = ExpenseReport::all()->pluck('created_at');
+        $expenseReportMonths = ExpenseReport::whereBelongsTo(auth()->user())
+            ->pluck('created_at');
 
         return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport'));
     }
@@ -103,5 +95,21 @@ class ExpenseReportController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getFilteredExpenseReport(ExpenseReportService $service): ExpenseReport|null
+    {
+        $expenseReport = request()->whenHas('expenseReportMonth', function ($expenseReportDate) use ($service) {
+            $expenseReport = $service->getFromMonth(
+                auth()->user(),
+                Carbon::parse($expenseReportDate)
+            );
+
+            return $expenseReport;
+        }, function () {
+            return $expenseReport = null;
+        });
+
+        return $expenseReport;
     }
 }

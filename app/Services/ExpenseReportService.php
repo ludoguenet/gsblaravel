@@ -39,8 +39,7 @@ class ExpenseReportService
 
     private function createExpenseReport(User $authedUser): ExpenseReport
     {
-        $expenseReport = ExpenseReport::create([
-            'user_id' => $authedUser->id,
+        $expenseReport = $authedUser->expenseReports()->create([
             'state_id' => ReportStateEnum::InProcess->value
         ]);
 

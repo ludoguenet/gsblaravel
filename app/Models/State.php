@@ -10,6 +10,8 @@ class State extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function expenseReports(): HasMany
     {
         return $this->hasMany(ExpenseReport::class);
