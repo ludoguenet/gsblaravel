@@ -12,7 +12,10 @@ class ExtraFee extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['label', 'amount'];
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+    protected $fillable = ['label', 'amount', 'created_at'];
 
     public function expenseReport(): BelongsTo
     {

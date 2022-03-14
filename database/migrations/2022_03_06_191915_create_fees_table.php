@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
+            $table->integer('quantity');
 
             // Foreign Expense Report Key
             $table->unsignedBigInteger('expense_report_id');

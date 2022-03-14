@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('label');
             $table->integer('amount');
+            $table->dateTime('created_at');
 
             // Foreign Expense Report Key
             $table->unsignedBigInteger('expense_report_id');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreExpenseReportRequest;
 use App\Models\ExpenseReport;
 use App\Models\ExtraFee;
 use Illuminate\Http\Request;
@@ -34,11 +35,15 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ExpenseReport $expenseReport)
+    public function store(StoreExpenseReportRequest $request, ExpenseReport $expenseReport)
     {
-        $expenseReport->extraFees()->create($request->except('_token'));
+        $expenseReport->fees->map(fn ($fee) => $fee->update(['quantity' => $request->fees[$fee->type->id]]));
 
-        return to_route('report.create')->with('success', 'Frais hors-forfait saisis avec succès.');
+        if ($request->filled(['label', 'created_at', 'amount'])) {
+            $expenseReport->extraFees()->create($request->only('label', 'created_at', 'amount'));
+        }
+
+        return to_route('report.create')->with('success', 'Les frais ont bien été mis à jour.');
     }
 
     /**
@@ -83,6 +88,8 @@ class ExpenseReportExtraFeeController extends Controller
      */
     public function destroy(ExpenseReport $expenseReport, ExtraFee $extraFee)
     {
-        //
+        $extraFee->delete();
+
+        return redirect()->back()->with('success', 'Le frais hors forfait a bien été supprimé.');
     }
 }

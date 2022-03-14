@@ -17,7 +17,8 @@
                     <select name="expenseReportMonth" id="expense-report-month">
                         <option value="">--Quel mois--</option>
                         @foreach ($expenseReportMonths as $expenseReportMonth)
-                        <option value="{{ $expenseReportMonth }}">{{ $expenseReportMonth->translatedFormat('M Y') }}</option>
+                        <option value="{{ $expenseReportMonth }}">{{ $expenseReportMonth->translatedFormat('M Y') }}
+                        </option>
                         @endforeach
                     </select>
                     <x-button type="submit">Chercher</x-button>
@@ -30,11 +31,12 @@
                         <!-- Table -->
                         <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                             <header class="py-4 border-b border-gray-100 p-6">
-                                <h2 class="font-semibold text-gray-800">{{ $expenseReport->created_at->translatedFormat('F Y') }}</h2>
+                                <h2 class="font-semibold text-gray-800">{{
+                                    $expenseReport->created_at->translatedFormat('F Y') }}</h2>
                             </header>
                             <div class="p-3">
                                 <div class="overflow-x-auto">
-                                    <table class="table-auto w-full">
+                                    <table class="table-auto w-1/2">
                                         <h2 class="text-xl p-3">Frais Forfaitisés</h2>
                                         <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                                             <tr>
@@ -42,7 +44,10 @@
                                                     <div class="font-semibold text-left">Type</div>
                                                 </th>
                                                 <th class="p-2 whitespace-nowrap">
-                                                    <div class="font-semibold text-left">Montant</div>
+                                                    <div class="font-semibold text-left">Quantité</div>
+                                                </th>
+                                                <th class="p-2 whitespace-nowrap">
+                                                    <div class="font-semibold text-right">Total</div>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -53,7 +58,13 @@
                                                     {{ $fee->type->label }}
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap">
-                                                    <div class="text-left font-medium text-green-500">{{ $fee->amount }} €</div>
+                                                    <div class="text-left font-medium text-green-500">{{ $fee->quantity
+                                                        }}</div>
+                                                </td>
+                                                <td class="p-2 whitespace-nowrap">
+                                                    <div class="text-right font-medium text-green-500">{{
+                                                        $fee->getTotal()
+                                                        }} €</div>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -64,7 +75,7 @@
                             @if ($expenseReport->extraFees->count() > 0)
                             <div class="p-3">
                                 <div class="overflow-x-auto">
-                                    <table class="table-auto w-full">
+                                    <table class="table-auto w-1/2">
                                         <h2 class="text-xl p-3">Frais Non Forfaitisés</h2>
                                         <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                                             <tr>
@@ -72,7 +83,10 @@
                                                     <div class="font-semibold text-left">Type</div>
                                                 </th>
                                                 <th class="p-2 whitespace-nowrap">
-                                                    <div class="font-semibold text-left">Montant</div>
+                                                    <div class="font-semibold text-left">Date</div>
+                                                </th>
+                                                <th class="p-2 whitespace-nowrap">
+                                                    <div class="font-semibold text-right">Montant</div>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -83,7 +97,11 @@
                                                     {{ $extraFee->label }}
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap">
-                                                    <div class="text-left font-medium text-green-500">{{ $extraFee->amount }} €</div>
+                                                    {{ $extraFee->created_at->format('d/m/Y') }}
+                                                </td>
+                                                <td class="p-2 whitespace-nowrap">
+                                                    <div class="text-right font-medium text-green-500">{{
+                                                        $extraFee->amount }} €</div>
                                                 </td>
                                             </tr>
                                             @endforeach

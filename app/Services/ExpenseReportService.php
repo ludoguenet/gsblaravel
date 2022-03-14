@@ -51,10 +51,10 @@ class ExpenseReportService
     private function createReportFees(ExpenseReport $expenseReport): void
     {
         $expenseReport->fees()->createMany([
-            ['amount' => 0, 'type_id' => FeeTypeEnum::Step],
-            ['amount' => 0, 'type_id' => FeeTypeEnum::KilometersFee],
-            ['amount' => 0, 'type_id' => FeeTypeEnum::NightHotel],
-            ['amount' => 0, 'type_id' => FeeTypeEnum::RestaurantMeal]
+            ['quantity' => 0, 'type_id' => FeeTypeEnum::Step],
+            ['quantity' => 0, 'type_id' => FeeTypeEnum::KilometersFee],
+            ['quantity' => 0, 'type_id' => FeeTypeEnum::NightHotel],
+            ['quantity' => 0, 'type_id' => FeeTypeEnum::RestaurantMeal]
         ]);
     }
 }

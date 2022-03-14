@@ -81,9 +81,9 @@ class ExpenseReportController extends Controller
      */
     public function update(Request $request, ExpenseReport $report)
     {
-        $report->fees->map(fn ($fee) => $fee->update(['amount' => $request->fees[$fee->type->id]]));
+        // $report->fees->map(fn ($fee) => $fee->update(['quantity' => $request->fees[$fee->type->id]]));
 
-        return to_route('report.create')->with('success', 'Frais forfaitisés mis à jour avec succès.');
+        // return to_route('report.create')->with('success', 'Frais forfaitisés mis à jour avec succès.');
     }
 
     /**

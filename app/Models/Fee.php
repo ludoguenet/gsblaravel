@@ -13,7 +13,7 @@ class Fee extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['amount', 'expense_report_id', 'type_id'];
+    protected $fillable = ['quantity', 'expense_report_id', 'type_id'];
 
     public function expenseReport(): BelongsTo
     {
@@ -25,11 +25,8 @@ class Fee extends Model
         return $this->belongsTo(Type::class);
     }
 
-    protected function amount(): Attribute
+    public function getTotal(): int|float
     {
-        return Attribute::make(
-            get: fn ($value) => number_format($value / 100, 2, ',', ' '),
-            set: fn ($value) => str_replace(',', '.', $value) * 100
-        );
+        return $this->quantity * ($this->type->amount / 100);
     }
 }
