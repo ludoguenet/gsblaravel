@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use App\Enums\Fee\FeeTypeEnum;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,17 +26,20 @@ class StoreExpenseReportRequest extends FormRequest
      */
     public function rules()
     {
+
         $rulesArray = [
             'fees' => 'array',
-            'fees.*' => 'required|integer',
-            'fee_types.*' => [new Enum(FeeTypeEnum::class)]
+            'fees.*' => 'required|numeric|min:0',
+            'fee_types.*' => [new Enum(FeeTypeEnum::class)],
+            'fees.' . FeeTypeEnum::NightHotel->value => 'required|numeric|min:0|max:' . Carbon::now()->daysInMonth
         ];
 
         if (isset($this->label)) {
-            array_merge($rulesArray, [
+            $rulesArray = array_merge($rulesArray, [
                 'label' => 'required|string',
-                'created_at' => 'required|date_format:yyyy-mm-dd',
-                'amount' => 'required|integer',
+                'created_at' => 'required|date_format:Y-m-d',
+                'amount' => 'required|numeric',
+                'proof' => 'sometimes|file|mimes:pdf,png,jpg|max:2048'
             ]);
         }
 

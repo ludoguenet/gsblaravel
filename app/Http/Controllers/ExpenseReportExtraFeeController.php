@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreExpenseReportRequest;
-use App\Models\ExpenseReport;
 use App\Models\ExtraFee;
 use Illuminate\Http\Request;
+use App\Models\ExpenseReport;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreExpenseReportRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExpenseReportExtraFeeController extends Controller
 {
@@ -37,10 +39,21 @@ class ExpenseReportExtraFeeController extends Controller
      */
     public function store(StoreExpenseReportRequest $request, ExpenseReport $expenseReport)
     {
-        $expenseReport->fees->map(fn ($fee) => $fee->update(['quantity' => $request->fees[$fee->type->id]]));
+        $expenseReport->fees->map(
+            fn ($fee) => $fee->update(
+                ['quantity' => $request->fees[$fee->type->id]]
+            )
+        );
 
         if ($request->filled(['label', 'created_at', 'amount'])) {
-            $expenseReport->extraFees()->create($request->only('label', 'created_at', 'amount'));
+            $extraFee = $expenseReport->extraFees()->create($request->only('label', 'created_at', 'amount'));
+
+            if ($request->has('proof')) {
+                $path = $request->file('proof')->store('extra_fee_proofs');
+                $extraFee->proof()->create([
+                    'filename' => $path
+                ]);
+            }
         }
 
         return to_route('report.create')->with('success', 'Les frais ont bien été mis à jour.');
@@ -52,9 +65,9 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ExpenseReport $expenseReport, ExtraFee $extraFee)
+    public function show(ExpenseReport $expenseReport, ExtraFee $extraFee): StreamedResponse
     {
-        //
+        return Storage::download($extraFee->proof->filename);
     }
 
     /**
