@@ -92,24 +92,43 @@
                             </td>
                             <td class="p-2 whitespace-nowrap">
                                 <div class="text-right font-medium text-red-500">
+                                    <div class="flex items-center justify-evenly">
+                                        @if ($extraFee->proof()->exists())
+                                        <a
+                                            href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                            </svg>
+                                        </a>
+                                        @else
+                                        <form action="{{ route('expenseReports.extraFees.update', [$expenseReport, $extraFee]) }}" method="post" id="proofAjaxForm-{{ $extraFee->id }}" enctype="multipart/form-data">
+                                            @method('put')
+                                            @csrf
+                                            <div class="flex w-full py-5">
+                                                <label
+                                                    class="cursor-pointer hover:text-gray-400 text-gray-900">
+                                                    <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20">
+                                                        <path
+                                                            d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                                    </svg>
+                                                    <input type="file"
+                                                    name="proofAjaxInput"
+                                                    class="hidden proofAjaxClass"
+                                                    id="{{ $extraFee->id }}" />
+                                                </label>
+                                            </div>
+                                        </form>
+                                        @endif
                                     <form
                                         action="{{ route('expenseReports.extraFees.destroy', [$expenseReport, $extraFee]) }}"
                                         method="post">
                                         @method('delete')
                                         @csrf
 
-                                        <div class="flex items-center justify-end">
-                                            @if ($extraFee->proof()->exists())
-                                            <a
-                                                href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                    stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                                                </svg>
-                                            </a>
-                                            @endif
                                             <x-button class="bg-red-500 hover:bg-red-800 ml-5"
                                                 onclick="return confirm('êtes-vous certain?')">
                                                 Supprimer

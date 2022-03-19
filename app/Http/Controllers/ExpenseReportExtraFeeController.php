@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ExpenseReport;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreExpenseReportRequest;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExpenseReportExtraFeeController extends Controller
@@ -88,9 +89,17 @@ class ExpenseReportExtraFeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpenseReport $expenseReport, ExtraFee $extraFee)
+    public function update(Request $request, ExpenseReport $expenseReport, ExtraFee $extraFee): JsonResponse
     {
-        //
+        $path = $request->file('proofAjaxInput')->store('extra_fee_proofs');
+        $extraFee->proof()->create([
+            'filename' => $path
+        ]);
+
+        return response()->json([
+            'success' => 'Justificatif des Frais Hors Forfaits mis à jour.',
+            'path' => $path
+        ]);
     }
 
     /**

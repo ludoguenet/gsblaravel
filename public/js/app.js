@@ -5639,6 +5639,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./proofajax */ "./resources/js/proofajax.js");
+
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
@@ -5673,6 +5675,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/proofajax.js":
+/*!***********************************!*\
+  !*** ./resources/js/proofajax.js ***!
+  \***********************************/
+/***/ (() => {
+
+var proofInputs = document.querySelectorAll('.proofAjaxClass');
+console.log(proofInputs);
+
+var uploadProofFile = function uploadProofFile(e) {
+  e.preventDefault();
+  var proofAjaxForm = document.querySelector('#proofAjaxForm-' + this.id);
+  var data = new FormData(proofAjaxForm);
+  axios.post(proofAjaxForm.action, data).then(function (res) {
+    return console.log(res);
+  })["catch"](function (err) {
+    return console.log(err);
+  });
+};
+
+if (proofInputs.length > 0) {
+  proofInputs.forEach(function (proofInput) {
+    return proofInput.addEventListener('change', uploadProofFile);
+  });
+}
 
 /***/ }),
 
