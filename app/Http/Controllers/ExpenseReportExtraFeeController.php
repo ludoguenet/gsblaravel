@@ -91,6 +91,10 @@ class ExpenseReportExtraFeeController extends Controller
      */
     public function update(Request $request, ExpenseReport $expenseReport, ExtraFee $extraFee): JsonResponse
     {
+        $request->validate([
+            'proofAjaxInput' => 'file|mimes:pdf,png,jpg|max:2048'
+        ]);
+
         $path = $request->file('proofAjaxInput')->store('extra_fee_proofs');
         $extraFee->proof()->create([
             'filename' => $path

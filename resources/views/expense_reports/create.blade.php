@@ -92,7 +92,7 @@
                             </td>
                             <td class="p-2 whitespace-nowrap">
                                 <div class="text-right font-medium text-red-500">
-                                    <div class="flex items-center justify-evenly">
+                                    <div class="flex items-center justify-end">
                                         @if ($extraFee->proof()->exists())
                                         <a
                                             href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
