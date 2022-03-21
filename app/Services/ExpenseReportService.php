@@ -26,6 +26,8 @@ class ExpenseReportService
     {
         $expenseReport = $this->getCurrentMonthReport($authedUser, $expenseReportDate);
 
+        $this->loadSum($expenseReport);
+
         return $expenseReport;
     }
 
@@ -56,5 +58,16 @@ class ExpenseReportService
             ['quantity' => 0, 'type_id' => FeeTypeEnum::NightHotel],
             ['quantity' => 0, 'type_id' => FeeTypeEnum::RestaurantMeal]
         ]);
+    }
+
+    private function loadSum(ExpenseReport $expenseReport): void
+    {
+        $expenseReport->loadSum(['extraFees' => function ($query) {
+            return $query->whereExists(function ($query) {
+                $query->select('id')
+                    ->from('proofs')
+                    ->whereColumn('proofs.extra_fee_id', 'extra_fees.id');
+            });
+        }], 'amount');
     }
 }

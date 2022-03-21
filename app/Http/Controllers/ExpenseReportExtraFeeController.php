@@ -102,7 +102,8 @@ class ExpenseReportExtraFeeController extends Controller
 
         return response()->json([
             'success' => 'Justificatif des Frais Hors Forfaits mis à jour.',
-            'path' => $path
+            'path' => $path,
+            'download_route' => route('expenseReports.extraFees.show', [$expenseReport, $extraFee])
         ]);
     }
 

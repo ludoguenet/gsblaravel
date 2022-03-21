@@ -25,8 +25,9 @@ class Fee extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function getTotal(): int|float
+    public function getFormattedTotalAttribute(): string
     {
-        return $this->quantity * ($this->type->amount / 100);
+        return number_format($this->quantity * ($this->type->amount / 100), 2, ',', ' ') . ' €';
     }
+
 }

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(50)->create();
+        $visiteurs = json_decode(file_get_contents('database/factories/json/visiteurs.json'), true);
+
+        foreach ($visiteurs['rows'] as $visiteur) {
+            User::create([
+                'last_name' => $visiteur['nom'],
+                'first_name' => $visiteur['prenom'],
+                'login' => $visiteur['login'],
+                'password' => Hash::make($visiteur['mdp']),
+                'address' => $visiteur['adresse'],
+                'zip_code' => $visiteur['cp'],
+                'city' => $visiteur['ville'],
+                'hired_at' => $visiteur['dateEmbauche']
+            ]);
+        }
+
+        \App\Models\User::factory(20)->create();
 
         $stateLalbels = [
             'Saisie clôturée',

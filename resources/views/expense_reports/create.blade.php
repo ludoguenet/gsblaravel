@@ -23,7 +23,7 @@
                     @foreach ($expenseReport->fees as $fee)
                     <x-label value="{{ $fee->type->label }}" />
                     <x-input type="text" name="fees[{{ $fee->type->id }}]" value="{{ $fee->quantity }}"
-                        class="w-full" />
+                        class="w-1/5" />
                     @endforeach
                 </div>
             </div>
@@ -31,13 +31,14 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <h1 class="text-xl font-bold mb-5">Frais Hors Forfaits</h1>
                 <div class="space-y-2">
                     <x-label value="Libellé" />
-                    <x-input type="text" name="label" class="w-full" value="{{ old('label') }}" />
+                    <x-input type="text" name="label" class="w-1/5" value="{{ old('label') }}" placeholder="Gourde isotherme" />
                     <x-label value="Date" />
-                    <x-input type="date" name="created_at" class="w-full" value="{{ old('created_at') }}" />
+                    <x-input type="date" name="created_at" class="w-1/5" value="{{ old('created_at') }}" />
                     <x-label value="Montant" />
-                    <x-input type="text" name="amount" class="w-full" value="{{ old('amount') }}" />
+                    <x-input type="text" name="amount" class="w-1/5" value="{{ old('amount') }}" placeholder="19,99" />
                     <div class="flex w-full py-5">
                         <label
                             class="w-64 flex flex-col items-center px-4 py-6 bg-gray-100 text-blue rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-gray-300 hover:text-gray-600">
@@ -96,11 +97,8 @@
                                         @if ($extraFee->proof()->exists())
                                         <a
                                             href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400"
-                                                fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                             </svg>
                                         </a>
                                         @else

@@ -7,6 +7,7 @@ use App\Models\ExpenseForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ExpenseReport;
+use App\Models\Fee;
 use App\Services\ExpenseReportService;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,7 +25,9 @@ class ExpenseReportController extends Controller
         $expenseReportMonths = ExpenseReport::whereBelongsTo(auth()->user())
             ->pluck('created_at');
 
-        return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport'));
+        $totalOfTotals = $expenseReport->fees_total + $expenseReport->extra_fees_sum_amount;
+
+        return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport', 'totalOfTotals'));
     }
 
     /**

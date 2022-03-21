@@ -35,4 +35,14 @@ class ExpenseReport extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    /**
+     * Custom Attributes
+     */
+    public function getFeesTotalAttribute(): float|int
+    {
+        return $this->fees->sum(function (Fee $fee) {
+            return $fee->quantity * $fee->type->amount;
+        });
+    }
 }

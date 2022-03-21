@@ -58,18 +58,19 @@
                                                     {{ $fee->type->label }}
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap">
-                                                    <div class="text-left font-medium text-green-500">{{ $fee->quantity
+                                                    <div class="text-left font-medium">{{ $fee->quantity
                                                         }}</div>
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap">
-                                                    <div class="text-right font-medium text-green-500">{{
-                                                        $fee->getTotal()
-                                                        }} €</div>
+                                                    <div class="text-right font-medium text-green-500">
+                                                        {{ $fee->formatted_total }}
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <div class="text-right font-semibold w-1/2 mt-3">Total : {{ format_amount($expenseReport->fees_total) }}</div>
                                 </div>
                             </div>
                             @if ($expenseReport->extraFees->count() > 0)
@@ -103,27 +104,31 @@
                                                     {{ $extraFee->created_at->format('d/m/Y') }}
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap">
-                                                    <div class="text-right font-medium text-green-500">{{
-                                                        $extraFee->amount }} €</div>
+                                                    <div class="text-right font-medium {{ $extraFee->proof()->exists() ? 'text-green-500' : 'text-orange-500' }}">
+                                                        {{ $extraFee->amount }} €
+                                                    </div>
                                                 </td>
                                                 <td class="p-2 whitespace-nowrap flex justify-end">
                                                     @if ($extraFee->proof()->exists())
                                                     <a
                                                         href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="h-5 w-5 text-gray-400" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                         </svg>
                                                     </a>
+                                                    @else
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                      </svg>
                                                     @endif
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <div class="text-right font-semibold w-1/2 mt-3">Total : {{ format_amount($expenseReport->extra_fees_sum_amount) }}</div>
                                 </div>
+                                <div class="text-right w-1/2 mt-5 font-bold">Total des totaux : {{ format_amount($totalOfTotals) }}</div>
                             </div>
                             @endif
                         </div>
