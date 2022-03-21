@@ -128,7 +128,7 @@
                                     </table>
                                     <div class="text-right font-semibold w-1/2 mt-3">Total : {{ format_amount($expenseReport->extra_fees_sum_amount) }}</div>
                                 </div>
-                                <div class="text-right w-1/2 mt-5 font-bold">Total des totaux : {{ format_amount($totalOfTotals) }}</div>
+                                <div class="text-right w-1/2 mt-5 font-bold">Total des totaux : {{ format_amount($expenseReport->totalOfTotals) }}</div>
                             </div>
                             @endif
                         </div>

@@ -14,6 +14,7 @@ class ExpenseReport extends Model
 {
     use HasFactory;
 
+    protected $appends = ['totalOfTotals'];
     protected $fillable = ['user_id', 'state_id'];
 
     public function fees(): HasMany

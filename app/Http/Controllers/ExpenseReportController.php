@@ -25,9 +25,7 @@ class ExpenseReportController extends Controller
         $expenseReportMonths = ExpenseReport::whereBelongsTo(auth()->user())
             ->pluck('created_at');
 
-        $totalOfTotals = $expenseReport->fees_total + $expenseReport->extra_fees_sum_amount;
-
-        return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport', 'totalOfTotals'));
+        return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport'));
     }
 
     /**

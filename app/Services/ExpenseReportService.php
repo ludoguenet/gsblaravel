@@ -27,6 +27,7 @@ class ExpenseReportService
         $expenseReport = $this->getCurrentMonthReport($authedUser, $expenseReportDate);
 
         $this->loadSum($expenseReport);
+        $this->calculateTotalOfTotals($expenseReport);
 
         return $expenseReport;
     }
@@ -69,5 +70,10 @@ class ExpenseReportService
                     ->whereColumn('proofs.extra_fee_id', 'extra_fees.id');
             });
         }], 'amount');
+    }
+
+    private function calculateTotalOfTotals(ExpenseReport $expenseReport): void
+    {
+        $expenseReport->totalOfTotals = $expenseReport->fees_total + $expenseReport->extra_fees_sum_amount;
     }
 }
