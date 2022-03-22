@@ -21,4 +21,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ExpenseReport::class);
     }
+
+    public function fees()
+    {
+        return $this->hasManyThrough(Fee::class, ExpenseReport::class);
+    }
 }
