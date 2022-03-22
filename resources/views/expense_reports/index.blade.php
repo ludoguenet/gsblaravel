@@ -16,7 +16,7 @@
 
                     <select name="expenseReportMonth" id="expense-report-month" class="block appearance-none w-1/2 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         @foreach ($expenseReportMonths as $expenseReportMonth)
-                        <option value="{{ $expenseReportMonth }}">{{ $expenseReportMonth->translatedFormat('M Y') }}
+                        <option value="{{ $expenseReportMonth }}">{{ Str::ucfirst($expenseReportMonth->translatedFormat('M Y')) }}
                         </option>
                         @endforeach
                     </select>
@@ -31,7 +31,7 @@
                         <div class="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                             <header class="py-4 border-b border-gray-100 p-6">
                                 <h2 class="font-semibold text-gray-800">{{
-                                    $expenseReport->created_at->translatedFormat('F Y') }}</h2>
+                                    Str::ucfirst($expenseReport->created_at->translatedFormat('F Y')) }}</h2>
                             </header>
                             <div class="p-3">
                                 <div class="overflow-x-auto">

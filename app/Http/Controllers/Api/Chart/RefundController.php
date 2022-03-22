@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Chart;
+namespace App\Http\Controllers\Api\Chart;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
 class RefundController extends Controller
 {
@@ -15,11 +16,16 @@ class RefundController extends Controller
      */
     public function index(): JsonResponse
     {
-        $expenseReportDates = auth()->user()->expenseReports()->orderBy('created_at')->pluck('created_at')->map(function ($expenseReportDate) {
+        $expenseReportDates = auth()->user()->expenseReports()
+            ->whereYear('created_at', Carbon::now()->year)
+            ->orderBy('created_at')
+            ->pluck('created_at')
+            ->map(function ($expenseReportDate) {
             return $expenseReportDate->translatedFormat('M');
         });
 
         $expenseReportTotals = auth()->user()->expenseReports()
+            ->whereYear('created_at', Carbon::now()->year)
             ->orderBy('created_at')
             ->get()
             ->map(function ($report) {
@@ -36,7 +42,8 @@ class RefundController extends Controller
 
         return response()->json([
             'expenseReportDates' => $expenseReportDates,
-            'expenseReportTotals' => $expenseReportTotals
+            'expenseReportTotals' => $expenseReportTotals,
+            'current_year' => Carbon::now()->year
         ]);
     }
 

@@ -7,17 +7,19 @@ const ctx = document.getElementById('myChart');
 if (ctx) {
     const resolveData = async () => {
         try {
-            const resp = await axios.get('/chart/refunds/bymonth');
+            const sanctum = await axios.get('/sanctum/csrf-cookie')
+            const resp = await axios.get('/api/chart/refunds/bymonth');
 
             let xData = resp.data.expenseReportDates;
             let yData = resp.data.expenseReportTotals;
+            let currentYear = resp.data.current_year;
 
             const myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: xData,
                     datasets: [{
-                        label: 'Remboursements mensuels',
+                        label: 'Remboursements mensuels de l\'année ' + currentYear,
                         data: yData,
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.2)',

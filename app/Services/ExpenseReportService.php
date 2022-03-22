@@ -26,9 +26,11 @@ class ExpenseReportService
     {
         $expenseReport = $this->getCurrentMonthReport($authedUser, $expenseReportDate);
 
-        $this->loadSum($expenseReport);
-        $this->calculateTotalOfTotals($expenseReport);
-
+        if ($expenseReport) {
+            $this->loadSum($expenseReport);
+            $this->calculateTotalOfTotals($expenseReport);
+        }
+            
         return $expenseReport;
     }
 

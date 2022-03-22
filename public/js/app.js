@@ -5730,25 +5730,31 @@ var ctx = document.getElementById('myChart');
 if (ctx) {
   var resolveData = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var resp, xData, yData, myChart;
+      var sanctum, resp, xData, yData, currentYear, myChart;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/chart/refunds/bymonth');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/sanctum/csrf-cookie');
 
             case 3:
+              sanctum = _context.sent;
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/chart/refunds/bymonth');
+
+            case 6:
               resp = _context.sent;
               xData = resp.data.expenseReportDates;
               yData = resp.data.expenseReportTotals;
+              currentYear = resp.data.current_year;
               myChart = new chart_js__WEBPACK_IMPORTED_MODULE_2__.Chart(ctx, {
                 type: 'bar',
                 data: {
                   labels: xData,
                   datasets: [{
-                    label: 'Remboursements mensuels',
+                    label: 'Remboursements mensuels de l\'année ' + currentYear,
                     data: yData,
                     backgroundColor: ['rgba(75, 192, 192, 0.2)'],
                     borderColor: ['rgba(75, 192, 192, 1)'],
@@ -5794,20 +5800,20 @@ if (ctx) {
                   }
                 }
               });
-              _context.next = 12;
+              _context.next = 16;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](0);
               console.error(_context.t0);
 
-            case 12:
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 9]]);
+      }, _callee, null, [[0, 13]]);
     }));
 
     return function resolveData() {

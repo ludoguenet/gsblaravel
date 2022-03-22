@@ -99,16 +99,25 @@ class ExpenseReportController extends Controller
     private function getFilteredExpenseReport(ExpenseReportService $service): ExpenseReport|null
     {
         $expenseReport = request()->whenHas('expenseReportMonth', function ($expenseReportDate) use ($service) {
+            if (!$this->checkValidDate($expenseReportDate)) { return null; }
+
             $expenseReport = $service->getFromMonth(
                 auth()->user(),
                 Carbon::parse($expenseReportDate)
             );
-
+            
             return $expenseReport;
         }, function () {
             return $expenseReport = null;
         });
 
+        if ($expenseReport instanceof Request) return null;
+
         return $expenseReport;
+    }
+
+    private function checkValidDate(string $expenseReportDate): bool
+    {
+        return preg_match(('/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/'), $expenseReportDate);
     }
 }

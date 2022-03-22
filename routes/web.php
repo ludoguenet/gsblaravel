@@ -26,10 +26,6 @@ Route::middleware('auth')->group(function () {
 
     // Nested Controllers
     Route::resource('expenseReports.extraFees', ExpenseReportExtraFeeController::class);
-
-    // ChartJS
-    Route::get('chart/refunds/bymonth', [RefundController::class, 'index'])
-        ->name('refunds.bymonth');
 });
 
 require __DIR__ . '/auth.php';
