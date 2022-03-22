@@ -17,7 +17,7 @@ class RefundController extends Controller
     {
         $expenseReportDates = auth()->user()->expenseReports()->orderBy('created_at')->pluck('created_at')->map(function ($expenseReportDate) {
             return $expenseReportDate->translatedFormat('M');
-        })->all();
+        });
 
         $expenseReportTotals = auth()->user()->expenseReports()
             ->orderBy('created_at')
@@ -32,7 +32,7 @@ class RefundController extends Controller
                 }], 'amount');
 
                 return ($report->fees_total + $report->extra_fees_sum_amount) / 100;
-            })->all();
+            });
 
         return response()->json([
             'expenseReportDates' => $expenseReportDates,
