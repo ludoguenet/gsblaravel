@@ -23,12 +23,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Charts $charts)
+    public function boot()
     {
         Carbon::setLocale('fr');
-
-        $charts->register([
-            \App\Charts\ExpenseChart::class
-        ]);
     }
 }

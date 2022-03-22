@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('report.index') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                        {{-- <x-application-logo class="block h-10 w-auto fill-current text-gray-600" /> --}}
+                        <img src="{{ asset('img/logo.jpg') }}" alt="Logo GSB" class="h-10">
                     </a>
                 </div>
 

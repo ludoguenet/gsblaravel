@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 require('./proofajax')
+require('./dashboardchart')
 
 import Alpine from 'alpinejs';
 

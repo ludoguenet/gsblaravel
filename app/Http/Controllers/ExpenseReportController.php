@@ -20,6 +20,7 @@ class ExpenseReportController extends Controller
         $expenseReport = $this->getFilteredExpenseReport($service);
 
         $expenseReportMonths = ExpenseReport::whereBelongsTo(auth()->user())
+            ->orderBy('created_at')
             ->pluck('created_at');
 
         return view('expense_reports.index', compact('expenseReportMonths', 'expenseReport'));

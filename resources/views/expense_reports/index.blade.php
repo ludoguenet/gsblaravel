@@ -9,12 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <!-- Chart's container -->
-                    <div id="chart" style="height: 300px;"></div>
-                    <!-- Charting library -->
-                    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-                    <!-- Chartisan -->
-                    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+                    <canvas id="myChart"></canvas>
                 </div>
                 <form action="{{ route('report.index') }}" method="get" class="p-6">
                     <label for="expense-report-month">Choisir le mois</label>
@@ -143,11 +138,4 @@
             </div>
         </div>
     </div>
-    <!-- Your application script -->
-    <script>
-        const chart = new Chartisan({
-            el: '#chart',
-            url: "@chart('expense_chart')"
-        });
-        </script>
 </x-app-layout>
