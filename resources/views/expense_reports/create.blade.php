@@ -6,11 +6,11 @@
     </x-slot>
 
     @if(session()->has('errors'))
-    <x-alert :message="session('errors')->first()" type="error" />
+        <x-alert :message="session('errors')->first()" type="error" />
     @endif
 
     @if(session()->has('success'))
-    <x-alert :message="session('success')" type="success" />
+        <x-alert :message="session('success')" type="success" />
     @endif
 
     <form action="{{ route('expenseReports.extraFees.store', $expenseReport) }}" method="post"

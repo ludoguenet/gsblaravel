@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Tableau de bord') }}
         </h2>
     </x-slot>
 
@@ -12,16 +12,15 @@
                     <canvas id="myChart"></canvas>
                 </div>
                 <form action="{{ route('report.index') }}" method="get" class="p-6">
-                    <label for="expense-report-month">Choisir le mois</label>
+                    <label for="expense-report-month">Selectionner un mois</label>
 
-                    <select name="expenseReportMonth" id="expense-report-month">
-                        <option value="">--Quel mois--</option>
+                    <select name="expenseReportMonth" id="expense-report-month" class="block appearance-none w-1/2 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         @foreach ($expenseReportMonths as $expenseReportMonth)
                         <option value="{{ $expenseReportMonth }}">{{ $expenseReportMonth->translatedFormat('M Y') }}
                         </option>
                         @endforeach
                     </select>
-                    <x-button type="submit">Chercher</x-button>
+                    <x-button type="submit" class="mt-3">Afficher les remboursements pour ce mois-ci</x-button>
                 </form>
 
                 @isset ($expenseReport)
