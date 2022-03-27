@@ -7,14 +7,14 @@ const ctx = document.getElementById('myChart');
 if (ctx) {
     const resolveData = async () => {
         try {
-            const sanctum = await axios.get('/sanctum/csrf-cookie')
+            await axios.get('/sanctum/csrf-cookie')
             const resp = await axios.get('/api/chart/refunds/bymonth');
 
             let xData = resp.data.expenseReportDates;
             let yData = resp.data.expenseReportTotals;
             let currentYear = resp.data.current_year;
 
-            const myChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: xData,
@@ -51,9 +51,11 @@ if (ctx) {
                                     if (label) {
                                         label += ': ';
                                     }
+
                                     if (context.parsed.y !== null) {
                                         label += new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(context.parsed.y);
                                     }
+
                                     return label;
                                 }
                             }
