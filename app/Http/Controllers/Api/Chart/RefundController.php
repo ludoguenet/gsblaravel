@@ -30,11 +30,7 @@ class RefundController extends Controller
             ->get()
             ->map(function ($report) {
                 $report->loadSum(['extraFees' => function ($query) {
-                    return $query->whereExists(function ($query) {
-                        $query->select('id')
-                            ->from('proofs')
-                            ->whereColumn('proofs.extra_fee_id', 'extra_fees.id');
-                    });
+                    return $query->has('proof');
                 }], 'amount');
 
                 return ($report->fees_total + $report->extra_fees_sum_amount) / 100;

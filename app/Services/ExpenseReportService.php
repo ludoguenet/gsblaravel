@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use App\Models\ExpenseReport;
 use App\Enums\Fee\FeeTypeEnum;
 use App\Enums\ExpenseReport\ReportStateEnum;
+use App\Models\ExtraFee;
 
 class ExpenseReportService
 {
@@ -65,12 +66,16 @@ class ExpenseReportService
 
     private function loadSum(ExpenseReport $expenseReport): void
     {
+        // $expenseReport->addSelect([
+        //     'total_extra_fees' => ExtraFee::whereColumn('expense_report_id', 'expense_reports.id')
+        //         ->selectRaw('SUM(extra_fees.amount)')
+        //         ->has('proof')
+        // ]);
+
+        // dd($expenseReport);
+        
         $expenseReport->loadSum(['extraFees' => function ($query) {
-            return $query->whereExists(function ($query) {
-                $query->select('id')
-                    ->from('proofs')
-                    ->whereColumn('proofs.extra_fee_id', 'extra_fees.id');
-            });
+            return $query->has('proof');
         }], 'amount');
     }
 

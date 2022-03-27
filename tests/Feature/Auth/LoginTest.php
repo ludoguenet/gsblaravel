@@ -22,7 +22,7 @@ class LoginTest extends TestCase
         $user = User::factory()->make();
         $response = $this->actingAs($user)->get('report');
 
-        $response->assertSee('Bienvenue sur votre compte GSB!');
+        $response->assertSee('Tableau de bord');
     }
 
     public function test_user_cant_access_report_index_when_unauthenticated()
