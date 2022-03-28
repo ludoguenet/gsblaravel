@@ -33,12 +33,12 @@ class StoreExpenseReportRequest extends FormRequest
             'fee_types.*' => [new Enum(FeeTypeEnum::class)],
             'fees.' . FeeTypeEnum::NightHotel->value => 'required|numeric|min:0|max:' . Carbon::now()->daysInMonth
         ];
-
+        
         if (isset($this->label)) {
             $rulesArray = array_merge($rulesArray, [
                 'label' => 'required|string',
                 'created_at' => 'required|date_format:Y-m-d',
-                'amount' => 'required|numeric',
+                'amount' => 'required|min:0',
                 'proof' => 'sometimes|file|mimes:pdf,png,jpg|max:2048'
             ]);
         }

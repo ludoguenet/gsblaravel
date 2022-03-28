@@ -95,6 +95,7 @@
                                 <div class="text-right font-medium text-red-500">
                                     <div class="flex items-center justify-end">
                                         @if ($extraFee->proof()->exists())
+                                        <img src="{{ Storage::url($extraFee->proof->filename) }}" alt="">
                                         <a
                                             href="{{ route('expenseReports.extraFees.show', [$expenseReport, $extraFee]) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
