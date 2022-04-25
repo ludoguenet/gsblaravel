@@ -38,7 +38,7 @@ class StoreExpenseReportRequest extends FormRequest
             $rulesArray = array_merge($rulesArray, [
                 'label' => 'required|string',
                 'created_at' => 'required|date_format:Y-m-d',
-                'amount' => 'required|min:0',
+                'amount' => 'required|numeric|min:1|max:50',
                 'proof' => 'sometimes|file|mimes:pdf,png,jpg|max:2048'
             ]);
         }
@@ -63,5 +63,11 @@ class StoreExpenseReportRequest extends FormRequest
         $this->merge([
             'fee_types' => array_keys($this->fees)
         ]);
+
+        if (isset($this->label)) {
+            $this->merge([
+                'amount' => str_replace(',', '.', request('amount'))
+            ]);
+        }
     }
 }
