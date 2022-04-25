@@ -17,7 +17,7 @@
                         {{ __('Tableau de bord') }}
                     </x-nav-link>
                     <x-nav-link :href="route('report.create')" :active="request()->routeIs('report.create')">
-                        {{ __('Ajouter une fiche de frais') }}
+                        {{ __('Saisir fiche de frais') }}
                     </x-nav-link>
                 </div>
             </div>

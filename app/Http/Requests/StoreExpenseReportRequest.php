@@ -49,7 +49,9 @@ class StoreExpenseReportRequest extends FormRequest
     public function messages()
     {
         return [
-            'fees.' . FeeTypeEnum::NightHotel->value . '.min' => 'Le nombre de jour ne peut pas être négatif.'
+            'fees.' . FeeTypeEnum::NightHotel->value . '.min' => 'Le nombre de jours ne peut pas être négatif.',
+            'fees.' . FeeTypeEnum::NightHotel->value . '.max' => 'Le nombre de jours ne peut pas être supérieur au nombre de jour du mois actuel.',
+
         ];
     }
 
