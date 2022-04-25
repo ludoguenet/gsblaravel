@@ -109,7 +109,7 @@ class ExpenseReportController extends Controller
         });
 
         if ($expenseReport instanceof Request) return null;
-
+        
         return $expenseReport;
     }
 
