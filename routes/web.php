@@ -17,7 +17,7 @@ use App\Http\Controllers\ExpenseReportExtraFeeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('login');
 });
 
 Route::middleware('auth')->group(function () {
