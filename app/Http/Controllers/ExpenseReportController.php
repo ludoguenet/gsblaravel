@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ExpenseReport;
+use App\Http\Controllers\Controller;
 use App\Services\ExpenseReportService;
 
 class ExpenseReportController extends Controller
@@ -101,14 +102,10 @@ class ExpenseReportController extends Controller
         $expenseReport = request()->whenHas('expenseReportMonth', function ($expenseReportDate) use ($service) {
             if (!$this->checkValidDate($expenseReportDate)) { return null; }
 
-            $expenseReport = $service->getFromMonth(
-                auth()->user(),
-                Carbon::parse($expenseReportDate)
-            );
-            
-            return $expenseReport;
-        }, function () {
-            return $expenseReport = null;
+            return $this->fromMonth($service, $expenseReportDate);
+        }, function () use ($service) {
+
+            return $this->fromMonth($service, now());
         });
 
         if ($expenseReport instanceof Request) return null;
@@ -119,5 +116,13 @@ class ExpenseReportController extends Controller
     private function checkValidDate(string $expenseReportDate): bool
     {
         return preg_match(('/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/'), $expenseReportDate);
+    }
+
+    private function fromMonth(ExpenseReportService $service, CarbonInterface|string $expenseReportDate)
+    {
+        return $service->getFromMonth(
+            auth()->user(),
+            Carbon::parse($expenseReportDate)
+        );
     }
 }
