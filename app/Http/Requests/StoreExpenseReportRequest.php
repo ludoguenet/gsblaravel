@@ -46,6 +46,13 @@ class StoreExpenseReportRequest extends FormRequest
         return $rulesArray;
     }
 
+    public function messages()
+    {
+        return [
+            'fees.' . FeeTypeEnum::NightHotel->value . '.min' => 'Le nombre de jour ne peut pas être négatif.'
+        ];
+    }
+
     /**
      * Prepare the data for validation.
      *

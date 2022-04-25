@@ -61,7 +61,7 @@
         <div class="p-0">
             <div class="overflow-x-auto">
                 <table class="table-auto w-1/2">
-                    <h2 class="text-xl font-bold mb-5">Frais non forfaitisés</h2>
+                    <h2 class="text-xl font-bold mb-5">Frais Hors Forfaits</h2>
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>
                             <th class="p-2 whitespace-nowrap">
