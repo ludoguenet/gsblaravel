@@ -46,6 +46,7 @@ class ExpenseReportExtraFeeController extends Controller
             )
         );
 
+        // Si le label, la date et le montant des frais hors forfaits ont été renseignés, nous enregistrons ce frais.
         if ($request->filled(['label', 'created_at', 'amount'])) {
             $extraFee = $expenseReport->extraFees()->create($request->only('label', 'created_at', 'amount'));
 
